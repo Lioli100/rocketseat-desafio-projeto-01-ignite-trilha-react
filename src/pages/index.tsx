@@ -12,7 +12,10 @@ interface Props {
 const LOCA_STORAGE_KEY = "todo:savedTasks";
 
 export default function Home({ task }: Props) {
-  const [tasks, setTasks] = useState(["Chekar todos os dias as tarefas"]);
+  const [tasks, setTasks] = useState([
+    { id: 1, content: "Chekar todos os dias as tarefas", done: false },
+  ]);
+  console.log(tasks);
 
   const [newTask, setNewTask] = useState("");
 
@@ -47,7 +50,7 @@ export default function Home({ task }: Props) {
 
   function deleteTask(taskToDelete: string) {
     const tasksWithoutDeleteOne = tasks.filter((task) => {
-      return task !== taskToDelete;
+      return task.content !== taskToDelete;
     });
     setTasksAndSave(tasksWithoutDeleteOne);
   }
@@ -89,7 +92,13 @@ export default function Home({ task }: Props) {
 
         <div>
           {tasks.map((task) => {
-            return <Task key={task} content={task} onDeleteTask={deleteTask} />;
+            return (
+              <Task
+                key={task.content}
+                content={task.content}
+                onDeleteTask={deleteTask}
+              />
+            );
           })}
         </div>
         {tasks.length <= 0 && (
